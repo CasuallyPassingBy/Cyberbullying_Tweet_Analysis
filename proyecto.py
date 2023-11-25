@@ -10,25 +10,23 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 import re
+import plotly_express as px
 
 lemmatizer = WordNetLemmatizer()
 stop_words_en = list(stopwords.words("English")) + ['rt']
 
 def load_database():
-    db = pd.read_csv('c:/Users/kbtmo/OneDrive/Documentos/programming_projects/Pelene/Proyecto_final/cyberbullying_tweets_procesados.csv')  # Replace with your database loading logic
+    db = pd.read_csv('c:/Users/kbtmo/OneDrive/Documentos/programming_projects/Pelene/Proyecto_final/cyberbullying_tweets_wordclouds.csv')  # Replace with your database loading logic
     return db
 
 
-# streamlit black magic ()
+# streamlit black magic (making it so that)
 @st.cache_data()
 def cached_database():
     return load_database()
 
 df = cached_database()
 # df['cyberbullying_type'].unique() = ['not_cyberbullying', 'gender', 'religion', 'other_cyberbullying','age', 'ethnicity']
-
-def unstringifies_your_vector(x):
-    np.fromstring(x.replace('\n','').replace('[','').replace(']','').replace('  ',' '), sep=' ')
 
 def preprocesamiento(text:str):
     text = text.lower()
@@ -74,19 +72,18 @@ def bar_chart_generator(column, n, type, k = 15):
 
 # Este diccionario tiene las opciones que ve el usuario y como se relaciona con los diferentes tipos de cyberbullying
 good_looking_options = {
-    'Not Cyberbullying':'not_cyberbullying',
     'Gender': 'gender',
     'Religion': 'religion',
-    'Other Cyberbullying':'other_cyberbullying',
     'Age':'age',
-    'Ethnicity':'ethnicity' 
+    'Ethnicity':'ethnicity',
+    'Other Cyberbullying':'other_cyberbullying',
+    'Not Cyberbullying':'not_cyberbullying'
 }
-
-df['vector'] = df['vector'].apply(unstringifies_your_vector)
 
 def main():
     st.write('# Analysis of Cyberbullying on Twitter')
     st.write('## Data Proprocessing')
+    st.write('### Wordclouds and Barcharts of Data')
     selected_types = st.multiselect(
         label = 'Cyberbullying categories', 
         options = good_looking_options.keys(), 
@@ -107,6 +104,16 @@ def main():
         bar_charts = [bar_chart_generator(good_looking_options.get(type), n, type) for type in selected_types]
         for bar_chart in bar_charts:
             st.pyplot(bar_chart)
+    st.write('### T-SNE Plot ')
+    fig = px.scatter(
+        data_frame= df,
+        x = df['tsne_1'],
+        y = df['tsne_2'],
+        template = 'plotly_dark',
+        # hover_data = ['review'],
+        color = df['cyberbullying_type']
+    )
+    st.plotly_chart(fig)
     
 if __name__ == '__main__':
     main()
