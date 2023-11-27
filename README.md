@@ -37,4 +37,5 @@ To run the project locally:
 2. Clone the repository.
 3. Access the models, scaler, and vectorized texts from the provided Google Drive link.
 4. Place the files in the appropriate directory.
-5. Execute project.py using Streamlit.
+5. Modify the path variable to the appropiate directory
+6. Execute project.py using Streamlit.
