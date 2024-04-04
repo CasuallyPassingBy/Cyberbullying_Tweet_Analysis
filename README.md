@@ -39,3 +39,7 @@ To run the project locally:
 4. Place the files in the appropriate directory.
 5. Modify the path variable to the appropiate directory
 6. Execute project.py using Streamlit.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
