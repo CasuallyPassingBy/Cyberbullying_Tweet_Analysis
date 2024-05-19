@@ -40,6 +40,11 @@ To run the project locally:
 5. Modify the path variable to the appropiate directory
 6. Execute project.py using Streamlit.
 
+## Contributors
+- [Mauricio Moscoso Mandujano](https://github.com/CasuallyPassingBy)
+- [Fernando Ruiz de Huidobro Zapata](https://github.com/frdhz)
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
